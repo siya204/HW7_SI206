@@ -261,6 +261,7 @@ class TestAllMethods(unittest.TestCase):
         self.cur2.execute("SELECT COUNT(*) FROM Winners WHERE Season >= '2000'")
         count = self.cur2.fetchone()[0]
         self.assertEqual(count, 3)
+        pass
 
 
 def main():

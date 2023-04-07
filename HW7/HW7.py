@@ -162,17 +162,17 @@ def position_birth_search(position, age, cur, conn):
 #     they have won since the year passed, including the season that ended
 #     the passed year. 
 
-#def make_winners_table(data, cur, conn):
-    #cur.execute("CREATE TABLE IF NOT EXISTS Winners (id INTEGER PRIMARY KEY, name TEXT UNIQUE)")
-    #winners = {}
-    #for season in data["seasons"]: 
-        #if season["winner"]: 
-            #winner_id = season["winner"]["id"]
-            #winner_name = season["winner"]["name"]
-            #if winner_id not in winners:
-                #winners[winner_id] = winner_name
-                #cur.execute("INSERT OR IGNORE INTO Winners (id, name) VALUES (?,?)", (int(winner_id), winner_name))
-    #conn.commit()
+def make_winners_table(data, cur, conn):
+    cur.execute("CREATE TABLE IF NOT EXISTS Winners (id INTEGER PRIMARY KEY, name TEXT UNIQUE)")
+    winners = {}
+    for season in data["seasons"]: 
+        if season["winner"]: 
+            winner_id = season["winner"]["id"]
+            winner_name = season["winner"]["name"]
+            if winner_id not in winners:
+                winners[winner_id] = winner_name
+                cur.execute("INSERT OR IGNORE INTO Winners (id, name) VALUES (?,?)", (int(winner_id), winner_name))
+    conn.commit()
 
 #def make_seasons_table(data, cur, conn):
     #cur.execute("CREATE TABLE IF NOT EXISTS Seasons (id INTEGER PRIMARY KEY, season TEXT UNIQUE)")
@@ -242,11 +242,11 @@ class TestAllMethods(unittest.TestCase):
         self.assertEqual(c, [('Teden Mengi', 'Defence', 2002)])
     
     # test extra credit
-    #def test_make_winners_table(self):
-        #self.cur2.execute('SELECT * from Winners')
-        #winners_list = self.cur2.fetchall()
-        #self.assertEqual(len(winners_list), 7)
-        #self.assertEqual(len(winners_list[0]), 2)
+    def test_make_winners_table(self):
+        self.cur2.execute('SELECT * from Winners')
+        winners_list = self.cur2.fetchall()
+        self.assertEqual(len(winners_list), 7)
+        self.assertEqual(len(winners_list[0]), 2)
 
     #def test_make_seasons_table(self):
         #self.cur2.execute('SELECT * from Seasons')
@@ -273,7 +273,7 @@ def main():
 
     seasons_json_data = read_data('football_PL.json')
     cur2, conn2 = open_database('Football_seasons.db')
-    #make_winners_table(seasons_json_data, cur2, conn2)
+    make_winners_table(seasons_json_data, cur2, conn2)
     #make_seasons_table(seasons_json_data, cur2, conn2)
     conn2.close()
 

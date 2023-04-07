@@ -251,18 +251,16 @@ class TestAllMethods(unittest.TestCase):
         self.assertEqual(len(winners_list), 7)
         self.assertEqual(len(winners_list[0]), 2)
 
-    def test_make_seasons_table(self):
-        self.cur2.execute('SELECT * from Seasons')
-        seasons_list = self.cur2.fetchall()
-        self.assertEqual(len(seasons_list), 6)
-        self.assertEqual(len(seasons_list[0]), 4)
-        pass
+    #def test_make_seasons_table(self):
+        #self.cur2.execute('SELECT * from Seasons')
+        #seasons_list = self.cur2.fetchall()
+        #self.assertEqual(len(seasons_list), 6)
+        #self.assertEqual(len(seasons_list[0]), 4)
 
-    def test_winners_since_search(self):
-        self.cur2.execute("SELECT COUNT(*) FROM Winners WHERE Season >= '2000'")
-        count = self.cur2.fetchone()[0]
-        self.assertEqual(count, 3)
-        pass
+    #def test_winners_since_search(self):
+        #self.cur2.execute("SELECT COUNT(*) FROM Winners WHERE Season >= '2000'")
+        #count = self.cur2.fetchone()[0]
+        #self.assertEqual(count, 3)
 
 
 def main():

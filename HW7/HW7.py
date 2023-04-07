@@ -186,10 +186,10 @@ def make_seasons_table(data, cur, conn):
     pass
     
 
-#def winners_since_search(year, cur, conn):
-    #cur.execute("SELECT Seasons.season, Teams.name FROM Seasons JOIN Teams ON Seasons.id = Teams.season_id WHERE Seasons.season >= ? AND Teams.winner = 1", (year,))
-    #conn.commit()
-    #return cur.fetchall()
+def winners_since_search(year, cur, conn):
+    cur.execute("SELECT Seasons.season, Teams.name FROM Seasons JOIN Teams ON Seasons.id = Teams.season_id WHERE Seasons.season >= ? AND Teams.winner = 1", (year,))
+    conn.commit()
+    return cur.fetchall()
 
 
 class TestAllMethods(unittest.TestCase):
@@ -255,11 +255,12 @@ class TestAllMethods(unittest.TestCase):
         seasons_list = self.cur2.fetchall()
         self.assertEqual(len(seasons_list), 6)
         self.assertEqual(len(seasons_list[0]), 4)
+        pass
 
-    #def test_winners_since_search(self):
-        #self.cur2.execute("SELECT COUNT(*) FROM Winners WHERE Season >= '2000'")
-        #count = self.cur2.fetchone()[0]
-        #self.assertEqual(count, 3)
+    def test_winners_since_search(self):
+        self.cur2.execute("SELECT COUNT(*) FROM Winners WHERE Season >= '2000'")
+        count = self.cur2.fetchone()[0]
+        self.assertEqual(count, 3)
 
 
 def main():
@@ -276,7 +277,7 @@ def main():
     seasons_json_data = read_data('football_PL.json')
     cur2, conn2 = open_database('Football_seasons.db')
     make_winners_table(seasons_json_data, cur2, conn2)
-    make_seasons_table(seasons_json_data, cur2, conn2)
+    #make_seasons_table(seasons_json_data, cur2, conn2)
     conn2.close()
 
 

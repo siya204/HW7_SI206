@@ -1,7 +1,7 @@
 
-# Your name:
-# Your student id:
-# Your email:
+# Your name: Siya Shah
+# Your student id: 58776189
+# Your email: siya@umich.edu
 # List who you have worked with on this project:
 
 import unittest

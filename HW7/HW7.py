@@ -174,15 +174,17 @@ def make_winners_table(data, cur, conn):
                 cur.execute("INSERT OR IGNORE INTO Winners (id, name) VALUES (?,?)", (int(winner_id), winner_name))
     conn.commit()
 
-#def make_seasons_table(data, cur, conn):
-    #cur.execute("CREATE TABLE IF NOT EXISTS Seasons (id INTEGER PRIMARY KEY, season TEXT UNIQUE)")
-    #seasons = []
-    #for season in data:
-        #if season['season'] not in seasons:
-            #seasons.append(season['season'])
-    #for i in range(len(seasons)):
-        #cur.execute("INSERT OR IGNORE INTO Seasons (id, season) VALUES (?,?)", (i, seasons[i]))
-    #conn.commit()
+def make_seasons_table(data, cur, conn):
+    cur.execute("CREATE TABLE IF NOT EXISTS Seasons (id INTEGER PRIMARY KEY, season TEXT UNIQUE)")
+    seasons = []
+    for season in data:
+        if season['season'] not in seasons:
+            seasons.append(season['season'])
+    for i in range(len(seasons)):
+        cur.execute("INSERT OR IGNORE INTO Seasons (id, season) VALUES (?,?)", (i, seasons[i]))
+    conn.commit()
+    pass
+    
 
 #def winners_since_search(year, cur, conn):
     #cur.execute("SELECT Seasons.season, Teams.name FROM Seasons JOIN Teams ON Seasons.id = Teams.season_id WHERE Seasons.season >= ? AND Teams.winner = 1", (year,))
@@ -248,11 +250,11 @@ class TestAllMethods(unittest.TestCase):
         self.assertEqual(len(winners_list), 7)
         self.assertEqual(len(winners_list[0]), 2)
 
-    #def test_make_seasons_table(self):
-        #self.cur2.execute('SELECT * from Seasons')
-        #seasons_list = self.cur2.fetchall()
-        #self.assertEqual(len(seasons_list), 6)
-        #self.assertEqual(len(seasons_list[0]), 4)
+    def test_make_seasons_table(self):
+        self.cur2.execute('SELECT * from Seasons')
+        seasons_list = self.cur2.fetchall()
+        self.assertEqual(len(seasons_list), 6)
+        self.assertEqual(len(seasons_list[0]), 4)
 
     #def test_winners_since_search(self):
         #self.cur2.execute("SELECT COUNT(*) FROM Winners WHERE Season >= '2000'")
@@ -274,7 +276,7 @@ def main():
     seasons_json_data = read_data('football_PL.json')
     cur2, conn2 = open_database('Football_seasons.db')
     make_winners_table(seasons_json_data, cur2, conn2)
-    #make_seasons_table(seasons_json_data, cur2, conn2)
+    make_seasons_table(seasons_json_data, cur2, conn2)
     conn2.close()
 
 

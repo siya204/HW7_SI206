@@ -190,6 +190,7 @@ def winners_since_search(year, cur, conn):
     cur.execute("SELECT Seasons.season, Teams.name FROM Seasons JOIN Teams ON Seasons.id = Teams.season_id WHERE Seasons.season >= ? AND Teams.winner = 1", (year,))
     conn.commit()
     return cur.fetchall()
+    pass
 
 
 class TestAllMethods(unittest.TestCase):
